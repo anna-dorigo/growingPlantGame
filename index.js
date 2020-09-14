@@ -103,7 +103,7 @@ function addFlower(){
 	let flowerImgObj = new Image();
     flowerImgObj.src = flowerImagePath;
     ctx.clearRect(0, 0, 200, 200);
-    
+
     flowerImgObj.onload = function(){
     
         //Draw the image onto the canvas.
@@ -148,14 +148,19 @@ function drawLeaf(){
     ctx.fillStyle=("#BED674");
     ctx.lineWidth = 1;
     ctx.fill();
-    ctx.stroke()
+    ctx.stroke();
     ctx.closePath(); 
 }
 
 function showLoosingMessage(){
 	let newTitle = "I'm sorry your plant just died";
 	currentDayTitle.innerText = newTitle;
-	feedPlantBtn.disabled = true;
+	feedPlantBtn.removeEventListener("click",feedPlant);
+	feedPlantBtn.innerText = "Play Again!";
+	feedPlantBtn.addEventListener("click", function(){
+		location.reload();
+	})
+	ctx.clearRect(200, 200, 200, 312);
 }
 
 function die(){

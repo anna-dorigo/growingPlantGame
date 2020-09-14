@@ -1,0 +1,50 @@
+
+#wrapper {
+    width: 1001px;
+    border: 1px solid black;
+    overflow: hidden;
+}
+#game-screen {
+    background-color: #FEFEDC;
+    float: left;
+}
+
+#instructions-div {
+    background-color: #EBBDFE;
+    float: left;
+    width: 400px;
+    height: 550px;
+}
+h3, h4 {
+    text-align: center;
+    width: 100%;
+    font-family: system-ui;
+}
+
+p {
+    font-family: system-ui;
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+.select-div {
+    width: 100%;
+    text-align: center;
+}
+
+.submit-div {
+    width: 100%;
+    text-align: center;
+    margin-top: 10px;
+}
+
+#feed-plant-button {
+    font-family: system-ui;
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    margin-top: 20px;
+    padding: 10px 20px;
+    text-align: center;
+    width: 200px;
+}

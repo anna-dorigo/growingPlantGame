@@ -1,8 +1,9 @@
 
 // setting up global variables
-var canvas = document.querySelector('#game-screen')
-var ctx = canvas.getContext('2d');
-var feedPlantBtn = document.getElementById("feed-plant-button");
+const canvas = document.querySelector('#game-screen')
+const ctx = canvas.getContext('2d');
+const feedPlantBtn = document.getElementById("feed-plant-button");
+const currentDayTitle = document.getElementById("current-day-title");
 const weatherOptionsFileNames = ["./images/rainnyDay.png","./images/sunnyDay.png"];
 const weatherOptions = ["rainny", "sunny"];
 const flowerImagePath = "./images/flower.png";
@@ -29,20 +30,6 @@ function initialSetUp(){
      "light, and vitamins to give the plant to grow healthy for 5 days.\n\n"+
      "Click ok to start!");
 
-    /*
-    let todayWeather = Math.floor(Math.random() * 2);
-    console.log(weatherOptions[todayWeather]);
-
-    let weatherImagePath = weatherOptionsFileNames[todayWeather];
-    let weatherImgObj = new Image();
-    weatherImgObj.src = weatherImagePath;
-    currentWeather = weatherOptions[todayWeather];
-
-    weatherImgObj.onload = function(){
-    
-        //Draw the image onto the canvas.
-        ctx.drawImage(weatherImgObj, 0, 0, 200, 200);
-    } */
     updateWeather();
 }
 
@@ -53,21 +40,20 @@ function feedPlant(){
 
     console.log("values "+ lightValue+"-"+waterValue+"-"+vitaminsValue);
     console.log(currentWeather)
+    console.log("************************")
 
     if(currentWeather === "rainny"){
         if(waterValue < 4 && lightValue > 2 && vitaminsValue > 5 ){
         	grow();
         }else{
-            //plantDie();
+            die();
             console.log("die!! rainny");
         }
-    }
-
-    if(currentWeather === "sunny"){
+    }else if(currentWeather === "sunny"){
         if(waterValue > 4 && lightValue < 2 && vitaminsValue < 5 ){
         	grow();
         }else{
-            //plantDie();
+            die();
             console.log("die!!sunny");
         }
     }
@@ -80,7 +66,6 @@ function feedPlant(){
 }
 
 function updateCurrentDayTitle(){
-	let currentDayTitle = document.getElementById("current-day-title");
 	let newTitle = "Day " + currentDay;
 	currentDayTitle.innerText = newTitle;
 }
@@ -103,6 +88,7 @@ function grow(){
 }
 
 function updateWeather(){
+	console.log("updating weather");
 	let todayWeather = Math.floor(Math.random() * 2);
     console.log(weatherOptions[todayWeather]);
 
@@ -134,7 +120,6 @@ function addFlower(){
 }
 
 function showWinningMessage(){
-	let currentDayTitle = document.getElementById("current-day-title");
 	let newTitle = "Mission accomplished, you won!";
 	currentDayTitle.innerText = newTitle;
 	feedPlantBtn.disabled = true;
@@ -150,6 +135,7 @@ function plantGrowingAmination(){
 	    ctx.moveTo(300, yPosition);
 	    ctx.lineTo(300, yPosition - growingRate);
 	    ctx.lineWidth = 10;
+	    ctx.lineCap = "round";
 	    ctx.strokeStyle = "#BED674";
 	    ctx.stroke();
 	    ctx.closePath();
@@ -172,11 +158,17 @@ function drawLeaf(){
     ctx.closePath(); 
 }
 
-
-function plantDie(){
-
-
+function showLoosingMessage(){
+	let newTitle = "I'm sorry your plant just died";
+	currentDayTitle.innerText = newTitle;
+	feedPlantBtn.disabled = true;
 }
+
+function die(){
+	console.log("-------------");
+	showLoosingMessage();
+}
+
 
 document.body.addEventListener("load",initialSetUp());
 feedPlantBtn.addEventListener("click", feedPlant);

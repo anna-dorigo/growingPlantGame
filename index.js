@@ -50,11 +50,7 @@ function feedPlant(){
 
     if(currentWeather === "rainny"){
         if(waterValue < 4 && lightValue > 2 && vitaminsValue > 5 ){
-        	counter = 5;
-            requestAnimationFrame(plantGrow);
-            currentDay = currentDay + 1;
-            updateCurrentDayTitle();
-            console.log("grow!! rainny");
+        	grow();
         }else{
             //plantDie();
             console.log("die!! rainny");
@@ -63,11 +59,7 @@ function feedPlant(){
 
     if(currentWeather === "sunny"){
         if(waterValue > 4 && lightValue < 2 && vitaminsValue < 5 ){
-        	counter = 5;
-            requestAnimationFrame(plantGrow);
-            currentDay = currentDay + 1;
-            updateCurrentDayTitle();
-            console.log("grow!! sunny");
+        	grow();
         }else{
             //plantDie();
             console.log("die!!sunny");
@@ -87,7 +79,19 @@ function updateCurrentDayTitle(){
 	currentDayTitle.innerText = newTitle;
 }
 
-function plantGrow(){
+function grow(){
+	counter = 5;
+    requestAnimationFrame(plantGrowingAmination);
+    currentDay = currentDay + 1;
+    updateCurrentDayTitle();
+    if (currentDay === 3){
+    	drawLeaf();
+    }
+    
+    console.log("grow!! rainny");
+}
+
+function plantGrowingAmination(){
         
     if(counter > 0){
 
@@ -98,8 +102,9 @@ function plantGrow(){
 	    ctx.lineWidth = 10;
 	    ctx.strokeStyle = "#BED674";
 	    ctx.stroke();
+	    ctx.closePath();
 	    yPosition = yPosition - 15;
-	    requestAnimationFrame(plantGrow);
+	    requestAnimationFrame(plantGrowingAmination);
 	    counter = counter - 1;
     }
 }
@@ -107,9 +112,11 @@ function plantGrow(){
 function drawLeaf(){
 
     ctx.beginPath();
-    ctx.arc(200,150,50,0,0.5*Math.PI);
-    ctx.arc(250,200,50,Math.PI, 1.5*Math.PI);
-    ctx.fillStyle=("#f00")
+	ctx.arc(307,350,50,0,0.5*Math.PI);
+    ctx.arc(357,400,50,Math.PI, 1.5*Math.PI);
+    ctx.strokeStyle = "#BED674";
+    ctx.fillStyle=("#BED674");
+    ctx.lineWidth = 1;
     ctx.fill();
     ctx.stroke()
     ctx.closePath(); 

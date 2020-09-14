@@ -9,6 +9,7 @@ var currentDay = 1
 var currentWeather = "";
 var yPosition = 525;
 var counter = 5;
+var growingRate = 12;
 
 
 // draw grass 
@@ -26,6 +27,7 @@ function initialSetUp(){
      "light, and vitamins to give the plant to grow healthy for 5 days.\n\n"+
      "Click ok to start!");
 
+    /*
     let todayWeather = Math.floor(Math.random() * 2);
     console.log(weatherOptions[todayWeather]);
 
@@ -38,7 +40,8 @@ function initialSetUp(){
     
         //Draw the image onto the canvas.
         ctx.drawImage(weatherImgObj, 0, 0, 200, 200);
-    }
+    } */
+    updateWeather();
 }
 
 function feedPlant(){
@@ -89,11 +92,30 @@ function grow(){
     	requestAnimationFrame(plantGrowingAmination);
     	currentDay = currentDay + 1;
     	updateCurrentDayTitle();
-    	if (currentDay === 3){
+    	if (currentDay === 4){
     		drawLeaf();
     	}
+    	updateWeather();
 	}
 	
+}
+
+function updateWeather(){
+	let todayWeather = Math.floor(Math.random() * 2);
+    console.log(weatherOptions[todayWeather]);
+
+    let weatherImagePath = weatherOptionsFileNames[todayWeather];
+    let weatherImgObj = new Image();
+    weatherImgObj.src = weatherImagePath;
+    currentWeather = weatherOptions[todayWeather];
+
+    weatherImgObj.onload = function(){
+    
+        //Draw the image onto the canvas.
+        ctx.clearRect(0, 0, 200, 200);
+        ctx.drawImage(weatherImgObj, 0, 0, 200, 200);
+    }
+
 }
 
 function addFlower(){
@@ -104,7 +126,13 @@ function addFlower(){
     
         //Draw the image onto the canvas.
         ctx.drawImage(flowerImgObj, 198, 110, 200, 200);
+        showWinningMessage();
     }
+
+}
+
+function showWinningMessage(){
+	alert("You won the game! \n To restart the game click ok");
 }
 
 function plantGrowingAmination(){
@@ -114,12 +142,12 @@ function plantGrowingAmination(){
     	console.log("growing")
 	    ctx.beginPath();
 	    ctx.moveTo(300, yPosition);
-	    ctx.lineTo(300, yPosition - 12);
+	    ctx.lineTo(300, yPosition - growingRate);
 	    ctx.lineWidth = 10;
 	    ctx.strokeStyle = "#BED674";
 	    ctx.stroke();
 	    ctx.closePath();
-	    yPosition = yPosition - 12;
+	    yPosition = yPosition - growingRate;
 	    requestAnimationFrame(plantGrowingAmination);
 	    counter = counter - 1;
     }

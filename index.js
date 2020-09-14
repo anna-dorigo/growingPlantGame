@@ -13,8 +13,6 @@ var yPosition = 525;
 var counter = 5;
 var growingRate = 12;
 
-
-
 // draw grass 
 ctx.beginPath();
 ctx.moveTo(200, 550);
@@ -38,23 +36,17 @@ function feedPlant(){
     let waterValue = document.getElementById("water").value;
     let vitaminsValue = document.getElementById("vitamins").value;
 
-    console.log("values "+ lightValue+"-"+waterValue+"-"+vitaminsValue);
-    console.log(currentWeather)
-    console.log("************************")
-
     if(currentWeather === "rainny"){
         if(waterValue < 4 && lightValue > 2 && vitaminsValue > 5 ){
         	grow();
         }else{
             die();
-            console.log("die!! rainny");
         }
     }else if(currentWeather === "sunny"){
         if(waterValue > 4 && lightValue < 2 && vitaminsValue < 5 ){
         	grow();
         }else{
             die();
-            console.log("die!!sunny");
         }
     }
 
@@ -88,9 +80,8 @@ function grow(){
 }
 
 function updateWeather(){
-	console.log("updating weather");
+
 	let todayWeather = Math.floor(Math.random() * 2);
-    console.log(weatherOptions[todayWeather]);
 
     let weatherImagePath = weatherOptionsFileNames[todayWeather];
     let weatherImgObj = new Image();
@@ -165,7 +156,6 @@ function showLoosingMessage(){
 }
 
 function die(){
-	console.log("-------------");
 	showLoosingMessage();
 }
 

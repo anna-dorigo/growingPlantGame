@@ -1,11 +1,13 @@
 
 // setting up global variables
-var canvas = document.getElementById("game-screen");
+var canvas = document.querySelector('#game-screen')
 var ctx = canvas.getContext('2d');
 const weatherOptionsFileNames = ["./images/rainnyDay.png","./images/sunnyDay.png"];
 const weatherOptions = ["rainny", "sunny"];
 var currentDay = 1
-var currentWeather = ""
+var currentWeather = "";
+var yPosition = 525;
+var counter = 5;
 
 
 // draw grass 
@@ -48,7 +50,10 @@ function feedPlant(){
 
     if(currentWeather === "rainny"){
         if(waterValue < 4 && lightValue > 2 && vitaminsValue > 5 ){
-            plantGrow();
+        	counter = 5;
+            requestAnimationFrame(plantGrow);
+            currentDay = currentDay + 1;
+            updateCurrentDayTitle();
             console.log("grow!! rainny");
         }else{
             //plantDie();
@@ -58,7 +63,10 @@ function feedPlant(){
 
     if(currentWeather === "sunny"){
         if(waterValue > 4 && lightValue < 2 && vitaminsValue < 5 ){
-            plantGrow();
+        	counter = 5;
+            requestAnimationFrame(plantGrow);
+            currentDay = currentDay + 1;
+            updateCurrentDayTitle();
             console.log("grow!! sunny");
         }else{
             //plantDie();
@@ -73,15 +81,43 @@ function feedPlant(){
 
 }
 
+function updateCurrentDayTitle(){
+	let currentDayTitle = document.getElementById("current-day-title");
+	let newTitle = "Day " + currentDay;
+	currentDayTitle.innerText = newTitle;
+}
+
 function plantGrow(){
         
-    console.log("growing")
+    if(counter > 0){
+
+    	console.log("growing")
+	    ctx.beginPath();
+	    ctx.moveTo(300, yPosition);
+	    ctx.lineTo(300, yPosition - 15);
+	    ctx.lineWidth = 10;
+	    ctx.strokeStyle = "#BED674";
+	    ctx.stroke();
+	    yPosition = yPosition - 15;
+	    requestAnimationFrame(plantGrow);
+	    counter = counter - 1;
+    }
+}
+
+function drawLeaf(){
+
     ctx.beginPath();
-    ctx.moveTo(300, 525);
-    ctx.lineTo(300, 450);
-    ctx.lineWidth = 10;
-    ctx.strokeStyle = "#BED674";
-    ctx.stroke();
+    ctx.arc(200,150,50,0,0.5*Math.PI);
+    ctx.arc(250,200,50,Math.PI, 1.5*Math.PI);
+    ctx.fillStyle=("#f00")
+    ctx.fill();
+    ctx.stroke()
+    ctx.closePath(); 
+}
+
+
+function plantDie(){
+
 
 }
 

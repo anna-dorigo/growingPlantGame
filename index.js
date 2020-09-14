@@ -1,6 +1,6 @@
 
 // setting up global variables
-const canvas = document.querySelector('#game-screen')
+const canvas = document.querySelector('#game-screen');
 const ctx = canvas.getContext('2d');
 const feedPlantBtn = document.getElementById("feed-plant-button");
 const currentDayTitle = document.getElementById("current-day-title");
@@ -8,10 +8,10 @@ const weatherOptionsFileNames = ["./images/rainnyDay.png","./images/sunnyDay.png
 const weatherOptions = ["rainny", "sunny"];
 const flowerImagePath = "./images/flower.png";
 const growingRate = 12;
-var currentDay = 1
+var currentDay = 1;
 var currentWeather = "";
-var yPosition = 525;
-var counter = 5;
+var yPosition = 525; // Y coordinate of the top of the plant
+var counter = 5; // amount of times animation will run
 
 
 // draw grass 
@@ -25,9 +25,10 @@ var counter = 5;
 
 
 function initialSetUp(){
-    alert("Welcome to the plant growing game!! \n"+
-     "The idea is to find the right amount of water,"+
+    alert("Welcome to the plant growing game! \n"+
+     "The idea is to find the right amount of water, "+
      "light, and vitamins to give the plant to grow healthy for 5 days.\n\n"+
+     "Note: Pay attention to the current weather to make the best decision.\n"+
      "Click ok to start!");
 
     updateWeather();
@@ -116,7 +117,7 @@ function addFlower(){
 function showWinningMessage(){
 	let newTitle = "Mission accomplished, you won!";
 	currentDayTitle.innerText = newTitle;
-	feedPlantBtn.disabled = true;
+	addPlayAgainOption();
 
 }
 
@@ -124,7 +125,7 @@ function plantGrowingAmination(){
         
     if(counter > 0){
 
-    	console.log("growing")
+    	console.log("growing");
 	    ctx.beginPath();
 	    ctx.moveTo(300, yPosition);
 	    ctx.lineTo(300, yPosition - growingRate);
@@ -155,16 +156,20 @@ function drawLeaf(){
 function showLoosingMessage(){
 	let newTitle = "I'm sorry your plant just died";
 	currentDayTitle.innerText = newTitle;
-	feedPlantBtn.removeEventListener("click",feedPlant);
-	feedPlantBtn.innerText = "Play Again!";
-	feedPlantBtn.addEventListener("click", function(){
-		location.reload();
-	})
 	ctx.clearRect(200, 200, 200, 312);
+	addPlayAgainOption();
 }
 
 function die(){
 	showLoosingMessage();
+}
+
+function addPlayAgainOption(){
+	feedPlantBtn.removeEventListener("click",feedPlant);
+	feedPlantBtn.innerText = "Play Again!";
+	feedPlantBtn.addEventListener("click", function(){
+		location.reload();
+	});
 }
 
 

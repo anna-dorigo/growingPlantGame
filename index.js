@@ -7,19 +7,21 @@ const currentDayTitle = document.getElementById("current-day-title");
 const weatherOptionsFileNames = ["./images/rainnyDay.png","./images/sunnyDay.png"];
 const weatherOptions = ["rainny", "sunny"];
 const flowerImagePath = "./images/flower.png";
+const growingRate = 12;
 var currentDay = 1
 var currentWeather = "";
 var yPosition = 525;
 var counter = 5;
-var growingRate = 12;
+
 
 // draw grass 
-ctx.beginPath();
-ctx.moveTo(200, 550);
-ctx.bezierCurveTo(250, 500, 350, 500, 400, 550);
-ctx.fillStyle = "#BED674";
-ctx.fill();
-
+(function(){
+	ctx.beginPath();
+	ctx.moveTo(200, 550);
+	ctx.bezierCurveTo(250, 500, 350, 500, 400, 550);
+	ctx.fillStyle = "#BED674";
+	ctx.fill();
+}());
 
 
 function initialSetUp(){
@@ -37,7 +39,7 @@ function feedPlant(){
     let vitaminsValue = document.getElementById("vitamins").value;
 
     if(currentWeather === "rainny"){
-        if(waterValue < 4 && lightValue > 2 && vitaminsValue > 5 ){
+        if(waterValue <= 4 && lightValue >= 2 && vitaminsValue >= 5 ){
         	grow();
         }else{
             die();
@@ -51,9 +53,9 @@ function feedPlant(){
     }
 
     //reset inputs
-    document.getElementById("light").value = 1;
-    document.getElementById("water").value = 1;
-    document.getElementById("vitamins").value = 1;
+    document.getElementById("light").value = 0;
+    document.getElementById("water").value = 0;
+    document.getElementById("vitamins").value = 0;
 
 }
 
@@ -100,7 +102,8 @@ function updateWeather(){
 function addFlower(){
 	let flowerImgObj = new Image();
     flowerImgObj.src = flowerImagePath;
-
+    ctx.clearRect(0, 0, 200, 200);
+    
     flowerImgObj.onload = function(){
     
         //Draw the image onto the canvas.

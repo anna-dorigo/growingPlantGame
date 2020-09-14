@@ -40,13 +40,13 @@ function feedPlant(){
     let vitaminsValue = document.getElementById("vitamins").value;
 
     if(currentWeather === "rainny"){
-        if(waterValue <= 4 && lightValue >= 2 && vitaminsValue >= 5 ){
+        if(waterValue <= 2 && lightValue >= 2 && vitaminsValue >= 5 ){
         	grow();
         }else{
             die();
         }
     }else if(currentWeather === "sunny"){
-        if(waterValue > 4 && lightValue < 2 && vitaminsValue < 5 ){
+        if(waterValue > 2 && lightValue < 2 && vitaminsValue < 5 ){
         	grow();
         }else{
             die();
@@ -109,16 +109,16 @@ function addFlower(){
     
         //Draw the image onto the canvas.
         ctx.drawImage(flowerImgObj, 198, 110, 200, 200);
-        showWinningMessage();
+        
     }
-
+    showWinningMessage();
+    addPlayAgainOption();
 }
 
 function showWinningMessage(){
 	let newTitle = "Mission accomplished, you won!";
 	currentDayTitle.innerText = newTitle;
-	addPlayAgainOption();
-
+	
 }
 
 function plantGrowingAmination(){
@@ -157,11 +157,11 @@ function showLoosingMessage(){
 	let newTitle = "I'm sorry your plant just died";
 	currentDayTitle.innerText = newTitle;
 	ctx.clearRect(200, 200, 200, 312);
-	addPlayAgainOption();
 }
 
 function die(){
 	showLoosingMessage();
+	addPlayAgainOption();
 }
 
 function addPlayAgainOption(){

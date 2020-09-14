@@ -4,6 +4,7 @@ var canvas = document.querySelector('#game-screen')
 var ctx = canvas.getContext('2d');
 const weatherOptionsFileNames = ["./images/rainnyDay.png","./images/sunnyDay.png"];
 const weatherOptions = ["rainny", "sunny"];
+const flowerImagePath = "./images/flower.png";
 var currentDay = 1
 var currentWeather = "";
 var yPosition = 525;
@@ -80,15 +81,30 @@ function updateCurrentDayTitle(){
 }
 
 function grow(){
-	counter = 5;
-    requestAnimationFrame(plantGrowingAmination);
-    currentDay = currentDay + 1;
-    updateCurrentDayTitle();
-    if (currentDay === 3){
-    	drawLeaf();
-    }
+	if(currentDay === 5){
+		addFlower();
+	}
+	else{
+		counter = 5;
+    	requestAnimationFrame(plantGrowingAmination);
+    	currentDay = currentDay + 1;
+    	updateCurrentDayTitle();
+    	if (currentDay === 3){
+    		drawLeaf();
+    	}
+	}
+	
+}
+
+function addFlower(){
+	let flowerImgObj = new Image();
+    flowerImgObj.src = flowerImagePath;
+
+    flowerImgObj.onload = function(){
     
-    console.log("grow!! rainny");
+        //Draw the image onto the canvas.
+        ctx.drawImage(flowerImgObj, 198, 110, 200, 200);
+    }
 }
 
 function plantGrowingAmination(){
@@ -98,12 +114,12 @@ function plantGrowingAmination(){
     	console.log("growing")
 	    ctx.beginPath();
 	    ctx.moveTo(300, yPosition);
-	    ctx.lineTo(300, yPosition - 15);
+	    ctx.lineTo(300, yPosition - 12);
 	    ctx.lineWidth = 10;
 	    ctx.strokeStyle = "#BED674";
 	    ctx.stroke();
 	    ctx.closePath();
-	    yPosition = yPosition - 15;
+	    yPosition = yPosition - 12;
 	    requestAnimationFrame(plantGrowingAmination);
 	    counter = counter - 1;
     }

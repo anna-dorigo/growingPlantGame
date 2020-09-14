@@ -2,6 +2,7 @@
 // setting up global variables
 var canvas = document.querySelector('#game-screen')
 var ctx = canvas.getContext('2d');
+var feedPlantBtn = document.getElementById("feed-plant-button");
 const weatherOptionsFileNames = ["./images/rainnyDay.png","./images/sunnyDay.png"];
 const weatherOptions = ["rainny", "sunny"];
 const flowerImagePath = "./images/flower.png";
@@ -10,6 +11,7 @@ var currentWeather = "";
 var yPosition = 525;
 var counter = 5;
 var growingRate = 12;
+
 
 
 // draw grass 
@@ -132,7 +134,11 @@ function addFlower(){
 }
 
 function showWinningMessage(){
-	alert("You won the game! \n To restart the game click ok");
+	let currentDayTitle = document.getElementById("current-day-title");
+	let newTitle = "Mission accomplished, you won!";
+	currentDayTitle.innerText = newTitle;
+	feedPlantBtn.disabled = true;
+
 }
 
 function plantGrowingAmination(){
@@ -173,5 +179,4 @@ function plantDie(){
 }
 
 document.body.addEventListener("load",initialSetUp());
-let feedPlantBtn = document.getElementById("feed-plant-button");
 feedPlantBtn.addEventListener("click", feedPlant);

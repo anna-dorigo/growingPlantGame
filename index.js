@@ -156,12 +156,46 @@ function drawLeaf(){
 function showLoosingMessage(){
 	let newTitle = "I'm sorry your plant just died";
 	currentDayTitle.innerText = newTitle;
-	ctx.clearRect(200, 200, 200, 312);
 }
 
+
 function die(){
+	displayDeadPlant();
 	showLoosingMessage();
 	addPlayAgainOption();
+}
+
+function displayDeadPlant(){
+	console.log("display dead plant");
+	ctx.clearRect(200, 200, 200, 312);
+	ctx.beginPath();
+	ctx.moveTo(300, 525);
+	ctx.lineTo(300, 400);
+	ctx.lineWidth = 10;
+	ctx.lineCap = "round";
+	ctx.strokeStyle = "#904A25";
+	ctx.stroke();
+	ctx.closePath();
+
+	ctx.beginPath();
+	ctx.arc(350,400,50, Math.PI, 0);
+    ctx.strokeStyle = "#904A25";
+    ctx.lineWidth = 10;
+    ctx.stroke();
+    ctx.closePath(); 
+
+    ctx.beginPath();
+	ctx.arc(350,400,50,0,0.5*Math.PI);
+    ctx.arc(400,450,50,Math.PI, 1.5*Math.PI);
+    ctx.strokeStyle = "#904A25";
+    ctx.fillStyle=("#904A25");
+    ctx.lineWidth = 1;
+    ctx.fill();
+    ctx.stroke();
+    ctx.closePath(); 
+
+
+
 }
 
 function addPlayAgainOption(){

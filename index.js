@@ -2,7 +2,7 @@
 // setting up global variables
 const canvas = document.querySelector('#game-screen');
 const ctx = canvas.getContext('2d');
-const feedPlantBtn = document.getElementById("feed-plant-button");
+const restartGameBtn = document.getElementById("restart-game-button");
 const currentDayTitle = document.getElementById("current-day-title");
 const weatherOptionsFileNames = ["./images/rainnyDay.png","./images/sunnyDay.png"];
 const weatherOptions = ["rainny", "sunny"];
@@ -12,6 +12,9 @@ var currentDay = 1;
 var currentWeather = "";
 var yPosition = 525; // Y coordinate of the top of the plant
 var counter = 5; // amount of times animation will run
+var weatherXPosition = 0;
+var weatherSpeed = 1;
+var weatherAnimationId = null;
 
 
 // draw grass 
@@ -39,6 +42,7 @@ function feedPlant(){
     let waterValue = document.getElementById("water").value;
     let vitaminsValue = document.getElementById("vitamins").value;
 
+    console.log(currentWeather);
     if(currentWeather === "rainny"){
         if(waterValue <= 2 && lightValue >= 2 && vitaminsValue >= 5 ){
         	grow();
@@ -82,12 +86,12 @@ function grow(){
 	
 }
 
+var weatherImgObj = new Image();
+
 function updateWeather(){
 
 	let todayWeather = Math.floor(Math.random() * 2);
-
     let weatherImagePath = weatherOptionsFileNames[todayWeather];
-    let weatherImgObj = new Image();
     weatherImgObj.src = weatherImagePath;
     currentWeather = weatherOptions[todayWeather];
 
@@ -96,9 +100,28 @@ function updateWeather(){
         //Draw the image onto the canvas.
         ctx.clearRect(0, 0, 200, 200);
         ctx.drawImage(weatherImgObj, 0, 0, 200, 200);
+        animateWeather();
     }
 
 }
+
+
+function animateWeather(){
+    ctx.clearRect(0, 0, canvas.width, 200);
+    ctx.drawImage(weatherImgObj, weatherXPosition, 0, 200, 200);
+    weatherXPosition = weatherXPosition + weatherSpeed;
+    if(weatherXPosition >= canvas.width){
+        cancelAnimationFrame(animateWeather);
+        weatherXPosition = 0;
+        feedPlant();
+    }
+    else{
+        weatherAnimationId = requestAnimationFrame(animateWeather);
+    }
+    
+}
+
+
 
 function addFlower(){
 	let flowerImgObj = new Image();
@@ -112,7 +135,6 @@ function addFlower(){
         
     }
     showWinningMessage();
-    addPlayAgainOption();
 }
 
 function showWinningMessage(){
@@ -162,7 +184,6 @@ function showLoosingMessage(){
 function die(){
 	displayDeadPlant();
 	showLoosingMessage();
-	addPlayAgainOption();
 }
 
 function displayDeadPlant(){
@@ -198,14 +219,6 @@ function displayDeadPlant(){
 
 }
 
-function addPlayAgainOption(){
-	feedPlantBtn.removeEventListener("click",feedPlant);
-	feedPlantBtn.innerText = "Play Again!";
-	feedPlantBtn.addEventListener("click", function(){
-		location.reload();
-	});
-}
 
-
+restartGameBtn.addEventListener("click", function(){location.reload();});
 document.body.addEventListener("load",initialSetUp());
-feedPlantBtn.addEventListener("click", feedPlant);

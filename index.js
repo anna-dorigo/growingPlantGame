@@ -8,6 +8,11 @@ const weatherOptionsFileNames = ["./images/rainnyDay.png","./images/sunnyDay.png
 const weatherOptions = ["rainny", "sunny"];
 const flowerImagePath = "./images/flower.png";
 const growingRate = 12;
+const flower_pink = "#FF0066"
+const flower_purple = "#CC33FF"
+const plant_green = "#BED674"
+const dead_plant_brown = "#904A25"
+const grass_green = "#A9BF82"
 var currentDay = 1;
 var currentWeather = "";
 var yPosition = 525; // Y coordinate of the top of the plant
@@ -15,14 +20,14 @@ var counter = 5; // amount of times animation will run
 var weatherXPosition = 0;
 var weatherSpeed = 1;
 var weatherAnimationId = null;
-
+var weatherImgObj = new Image();
 
 // draw grass 
 (function(){
 	ctx.beginPath();
 	ctx.moveTo(200, 550);
 	ctx.bezierCurveTo(250, 500, 350, 500, 400, 550);
-	ctx.fillStyle = "#BED674";
+	ctx.fillStyle = grass_green;
 	ctx.fill();
 }());
 
@@ -30,7 +35,7 @@ var weatherAnimationId = null;
 function initialSetUp(){
     alert("Welcome to the plant growing game! \n"+
      "The idea is to find the right amount of water, "+
-     "light, and vitamins to give the plant to grow healthy for 5 days.\n\n"+
+     "light, and vitamins to help the plant to grow healthy for 5 days.\n\n"+
      "Note: Pay attention to the current weather to make the best decision.\n"+
      "Click ok to start!");
 
@@ -71,7 +76,7 @@ function updateCurrentDayTitle(){
 
 function grow(){
 	if(currentDay === 5){
-		addFlower();
+		drawFlower();
 	}
 	else{
 		counter = 5;
@@ -85,8 +90,6 @@ function grow(){
 	}
 	
 }
-
-var weatherImgObj = new Image();
 
 function updateWeather(){
 
@@ -121,8 +124,6 @@ function animateWeather(){
     
 }
 
-
-
 function addFlower(){
 	let flowerImgObj = new Image();
     flowerImgObj.src = flowerImagePath;
@@ -135,6 +136,56 @@ function addFlower(){
         
     }
     showWinningMessage();
+}
+
+function drawFlower(){
+
+    ctx.beginPath();
+    ctx.arc(250,250,50,0,2*Math.PI);
+    ctx.strokeStyle = flower_pink;
+    ctx.fillStyle= flower_pink;
+    ctx.lineWidth = 1;
+    ctx.fill();
+    ctx.stroke();
+    ctx.closePath(); 
+
+    ctx.beginPath();
+    ctx.arc(300,200,50,0,2*Math.PI);
+    ctx.strokeStyle = flower_pink;
+    ctx.fillStyle= flower_pink;
+    ctx.lineWidth = 1;
+    ctx.fill();
+    ctx.stroke();
+    ctx.closePath(); 
+
+    ctx.beginPath();
+    ctx.arc(350,250,50,0,2*Math.PI);
+    ctx.strokeStyle = flower_pink;
+    ctx.fillStyle = flower_pink;
+    ctx.lineWidth = 1;
+    ctx.fill();
+    ctx.stroke();
+    ctx.closePath(); 
+
+    ctx.beginPath();
+    ctx.arc(300,300,50,0,2*Math.PI);
+    ctx.strokeStyle = flower_pink;
+    ctx.fillStyle= flower_pink;
+    ctx.lineWidth = 1;
+    ctx.fill();
+    ctx.stroke();
+    ctx.closePath(); 
+
+    // draw the center of the flower 
+    ctx.beginPath();
+    ctx.arc(300,250,40,0,2*Math.PI);
+    ctx.strokeStyle = flower_purple;
+    ctx.fillStyle= flower_purple;
+    ctx.lineWidth = 1;
+    ctx.fill();
+    ctx.stroke();
+    ctx.closePath(); 
+
 }
 
 function showWinningMessage(){
@@ -153,7 +204,7 @@ function plantGrowingAmination(){
 	    ctx.lineTo(300, yPosition - growingRate);
 	    ctx.lineWidth = 10;
 	    ctx.lineCap = "round";
-	    ctx.strokeStyle = "#BED674";
+	    ctx.strokeStyle = plant_green;
 	    ctx.stroke();
 	    ctx.closePath();
 	    yPosition = yPosition - growingRate;
@@ -167,8 +218,8 @@ function drawLeaf(){
     ctx.beginPath();
 	ctx.arc(307,350,50,0,0.5*Math.PI);
     ctx.arc(357,400,50,Math.PI, 1.5*Math.PI);
-    ctx.strokeStyle = "#BED674";
-    ctx.fillStyle=("#BED674");
+    ctx.strokeStyle = plant_green;
+    ctx.fillStyle=(plant_green);
     ctx.lineWidth = 1;
     ctx.fill();
     ctx.stroke();
